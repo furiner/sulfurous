@@ -1,0 +1,1 @@
+export type NextValue = Error | string | number | boolean | object | null | undefined;

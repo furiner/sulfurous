@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "module": "commonjs",
+        "target": "esnext",
+        "strict": true,
+        "declaration": true,
+        "esModuleInterop": true,
+        "removeComments": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": false,
+        "noFallthroughCasesInSwitch": true,
+        "experimentalDecorators": true
+    },
+    "include": [
+        "lib/**/*.ts",
+        "examples/**/*.ts"
+    ]
+}
