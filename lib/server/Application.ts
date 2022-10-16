@@ -27,7 +27,7 @@ export class Application {
 
     }
 
-    register(routePath: string, route: Controller) {
+    register(routePath: string, route: Controller | RouteFunction | WebsocketFunction) {
         // Validate the type of the route provided.
         if (route instanceof Controller) {
             // Parse all of the route middleware into the controller.
@@ -64,6 +64,22 @@ export class Application {
                     this.server.createWebsocketServer(path.join(routePath, websocketFunction.routeDescriptor?.routePath ?? "/").replace(/\\/g, "/"), websocketFunction);
                 }
             }
+        } else if (Util.isRouteFunction(route)) {
+            // Ensure there is an applicable router for this path.
+            let router = this.routes.find(routePath);
+            route = route as RouteFunction;
+
+            if (!router) {
+                // Create a new router for this path.
+                router = new Router(routePath);
+                this.routes.add(routePath, router);
+            }
+
+            // Register the route to the router.
+            router.register(route, route.routeDescriptor?.routePath);
+        } else if (Util.isWebsocketFunction(route)) {
+            // Create a new websocket server for this route.
+            this.server.createWebsocketServer(routePath, route as WebsocketFunction);
         }
     }
 
