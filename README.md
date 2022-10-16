@@ -1,6 +1,6 @@
 <div align="center">
     <img src="https://github.com/irisu01/sulfurous/blob/master/assets/darklogo.png?raw=true#gh-dark-mode-only" />
-    <img src="https://github.com/irisu01/sulfurous/blob/master/assets/lightlogo.png?raw=truegh-light-mode-only" />
+    <img src="https://github.com/irisu01/sulfurous/blob/master/assets/lightlogo.png?raw=true#gh-light-mode-only" />
 
     <p>A comprehensive and speedy framework for <a href="https://nodejs.org" target="_blank">Node.js</a> to support the many goals and needs of building modern and scalable web applications for the modern web.</p>
 
@@ -42,4 +42,4 @@ For all questions and support, we would like for you to use our established [Dis
 
 ### Issues & Contributions
 
-We have a dedicated guideline for how issues and contributions should be handled. Please read it [here]().
+We have a dedicated guideline for how issues and contributions should be handled. Please read it [here](https://github.com/irisu01/sulfurous/blob/master/CONTRIBUTING.md).
