@@ -103,7 +103,7 @@ The commit type can be one of the following:
 * **feat**: A new feature.
 * **fix**: A bug fix.
 * **refactor**: Changes that neither fixes a bug or adds a feature, or other code changes that don't modify the functionality of Sulfurous; such as performance changes.
-* **rev**: Changes that reverts a previous commit.
+* **revert**: Changes that reverts a previous commit.
 * **style**: Changes that do not affect the meaning of the code, such as formatting, whitespace, etc.
 * **test**: Changes to test files such as adding or removing unit tests, or modifying test files.
 
