@@ -4,7 +4,7 @@ import { RouteMethod } from "../types/RouteMethod";
 import { WebsocketFunction } from "../types/WebsocketFunction";
 
 export function Websocket(route?: string) {
-    return function (target: Controller, _: string, descriptor: TypedPropertyDescriptor<WebsocketFunction>) {
+    return function (target: Controller | typeof Controller, _: string, descriptor: TypedPropertyDescriptor<WebsocketFunction>) {
         // set route descriptor
         descriptor.value!.isWebsocketFunction = true;
         descriptor.value!.routeDescriptor = {
