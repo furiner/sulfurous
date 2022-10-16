@@ -6,7 +6,7 @@ orbs:
   node: circleci/node@2
 
 jobs:
-  setup:
+  build:
     working_directory: ~/sulfurous
     docker:
       - image: circleci/node:16
@@ -24,15 +24,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      
-      - run:
-          name: Install TypeScript
-          command: npm install typescript
-  build:
-    working_directory: ~/sulfurous
-    docker:
-      - image: circleci/node:16
-    steps:
+
       - run:
           name: Build Sulfurous
           command: npm run build
@@ -42,8 +34,5 @@ jobs:
 workflows:
   build:
     jobs:
-      - setup
-      - build:
-          requires:
-            - setup
+      - build
     
