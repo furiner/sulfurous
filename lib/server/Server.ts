@@ -2,19 +2,27 @@ import http, { Server as Http1Server } from "http";
 import http2, { Http2Server } from "http2";
 import fs from "fs";
 
+import { WebSocketServer } from "ws";
+
 import { Application } from "./Application";
 import { Request } from "../structures/requests/Request";
 import { Response } from "../structures/requests/Response";
 import { Router } from "../structures/Router";
 import { NextValue } from "../structures/types/NextValue";
+import { Layer } from "../structures/Layer";
+import { RouteMethod } from "../structures/types/RouteMethod";
+import { DataStream } from "../structures/data/DataStream";
+import { WebsocketFunction } from "../structures/types/WebsocketFunction";
 
 export class Server {
     public application: Application;
     public http1Server?: Http1Server;
     public http2Server?: Http2Server;
-
+    public websockets: Map<string, WebSocketServer>;
+    
     constructor(application: Application) {
         this.application = application;
+        this.websockets = new Map();
 
         // Create a HTTP2 server depending on the application options.
         if (this.application.options?.useHttp2) {
@@ -35,6 +43,35 @@ export class Server {
     }
 
     /**
+     * Starts the server.
+     * @param port The port to listen on.
+     */
+    start(port: number) {
+        this._handle();
+
+        if (this.isHttp2) {
+            this.http2Server?.listen(port);
+        } else {
+            this.http1Server?.listen(port);
+        }
+    }
+
+    createWebsocketServer(routePath: string, websocketFunction: WebsocketFunction) {
+        if (this.application.options?.websocketEnabled) {
+            const websocket = new WebSocketServer({ 
+                server: this.http1Server,
+                path: routePath,
+            });
+
+            websocket.on("connection", websocketFunction);
+
+            // Add the websocket server to the map.
+            this.websockets.set(routePath, websocket);
+        }
+    }
+
+    // INTERNAL METHODS
+    /**
      * Handles all of the events for the server.
      */
     private _handle() {
@@ -43,17 +80,21 @@ export class Server {
             //this.http2Server?.on("request", this._handleHTTP2Request.bind(this));
         } else {
             // Handle HTTP/1.1 requests.
-            this.http1Server?.on("request", this._handleHTTP1Request.bind(this));
+            this.http1Server?.on("request", (request, response) => {
+                const dataStream = new DataStream();
+                request.on("data", (data) => dataStream.write(data));
+                request.on("end", () => this._handleHTTP1Request(request, response, dataStream));
+            });
         }
     }
 
-    private _handleHTTP1Request(req: http.IncomingMessage, res: http.ServerResponse) {
+    private _handleHTTP1Request(req: http.IncomingMessage, res: http.ServerResponse, data: DataStream) {
         // Split the URL into a path to handle and a query string.
         const url = new URL(req.url ?? "", `http://${req.headers.host}`);
         const path = url.pathname.endsWith("/") ? url.pathname.slice(0, -1) : url.pathname;
 
         // Parse the request and response into their relevant objects.
-        const request = new Request(req);
+        const request = new Request(req, data);
         const response = new Response(res);
 
         let routerIndex = 0;
@@ -95,11 +136,11 @@ export class Server {
                 if (layer.path == undefined) {
                     // Only handle the layer if it's a middleware.
                     if (layer.isMiddleware) {
-                        layer.handle(request, response, nextLayer, value);
+                        this._handleLayer(layer, request, response, nextLayer, value);
                     }
                 } else {
                     if (layer.absolutePath === path) {
-                        layer.handle(request, response, nextLayer, value);
+                        this._handleLayer(layer, request, response, nextLayer, value);
                     } else {
                         // Parse the layer path into a parameter regex.
                         const regex = new RegExp(`^${layer.absolutePath.replace(/:([^/]*)+/g, "(?<$1>[^/]+)")}$`);
@@ -116,7 +157,7 @@ export class Server {
                                 }   
                             }
                             
-                            layer.handle(request, response, nextLayer, value);
+                            this._handleLayer(layer, request, response, nextLayer, value);
                         } else {
                             nextLayer(value);
                         }
@@ -131,18 +172,15 @@ export class Server {
         // Go to the next router.
         next();
     }
-
-    /**
-     * Starts the server.
-     * @param port The port to listen on.
-     */
-    start(port: number) {
-        this._handle();
-
-        if (this.isHttp2) {
-            this.http2Server?.listen(port);
-        } else {
-            this.http1Server?.listen(port);
+    
+    private _handleLayer(layer: Layer, request: Request, response: Response, nextLayer: (value?: NextValue) => void, value?: NextValue) {
+        // Validate that the request matches the layer's methods.
+        if (layer.methods.length > 0 && !layer.methods.includes(request.message.method as RouteMethod)) {
+            nextLayer(value);
+            return;
         }
+
+        // Handle the request.
+        layer.handle(request, response, nextLayer, value);
     }
 }
