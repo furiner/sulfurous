@@ -1,13 +1,13 @@
 import { Controller } from "../Controller";
 import { RouteFunction } from "../types/RouteFunction";
-import { RouteType } from "../types/RouteType";
+import { RouteMethod } from "../types/RouteMethod";
 
-export function Route(type: RouteType, route?: string) {
+export function Route(types: RouteMethod[], route?: string) {
     return function (target: Controller, _: string, descriptor: TypedPropertyDescriptor<RouteFunction>) {
         // set route descriptor
         descriptor.value!.routeDescriptor = {
             routePath: route,
-            routeType: RouteType.Get,
+            routeMethods: types,
             isMiddleware: false
         };
     }

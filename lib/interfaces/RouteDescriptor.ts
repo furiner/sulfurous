@@ -1,7 +1,7 @@
-import { RouteType } from "../structures/types/RouteType";
+import { RouteMethod } from "../structures/types/RouteMethod";
 
 export interface RouteDescriptor {
     routePath?: string;
-    routeType?: RouteType;
+    routeMethods?: RouteMethod[];
     isMiddleware: boolean;
 }
