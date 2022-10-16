@@ -3,6 +3,14 @@
  * The server options that can be provided to the web application instance.
  */
 export interface ApplicationOptions {
+    /* WEBSOCKET OPTIONS */ 
+    /**
+     * Whether or not to enable the web application to use websockets.
+     * @default false
+     */
+    websocketEnabled?: boolean;
+
+
     /* HTTP/2 OPTIONS */
     /**
      * Tells clients to use HTTP/2.
