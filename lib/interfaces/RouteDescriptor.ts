@@ -4,4 +4,5 @@ export interface RouteDescriptor {
     routePath?: string;
     routeMethods?: RouteMethod[];
     isMiddleware: boolean;
+    isWebsocket: boolean;
 }
