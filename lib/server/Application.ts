@@ -1,9 +1,13 @@
+import path from "path";
+
 import { DefaultController } from "../controllers/DefaultController";
 import { RouteHandler } from "../handlers/RouteHandler";
 import { ApplicationOptions } from "../interfaces/ApplicationOptions";
 import { Controller } from "../structures/Controller";
 import { Router } from "../structures/Router";
 import { RouteFunction } from "../structures/types/RouteFunction";
+import { WebsocketFunction } from "../structures/types/WebsocketFunction";
+import { Util } from "../util/Util";
 import { Server } from "./Server";
 
 export class Application {
@@ -12,9 +16,15 @@ export class Application {
     public server: Server;
 
     constructor(options?: ApplicationOptions) {
-        this.options = options ?? {};
         this.routes = new RouteHandler(this);
         this.server = new Server(this);
+
+        // Merge options with the default options.
+        this.options = Object.assign<ApplicationOptions, ApplicationOptions>({
+            websocketEnabled: false,
+            useHttp2: true,
+        }, options ?? {});
+
     }
 
     register(routePath: string, route: Controller) {
@@ -40,11 +50,18 @@ export class Application {
                 }
 
                 // Register the route to the router.
-                const routeFunction = controllerObject[method] as RouteFunction;
+                if (Util.isRouteFunction(controllerObject[method])) {
+                    const routeFunction = controllerObject[method] as RouteFunction;
 
-                if (routeFunction.routeDescriptor) {
-                    // Register the route as a route.
-                    router.register(routeFunction, routeFunction.routeDescriptor.routePath);
+                    if (routeFunction.routeDescriptor) {
+                        // Register the route as a route.
+                        router.register(routeFunction, routeFunction.routeDescriptor.routePath);
+                    }
+                } else if (Util.isWebsocketFunction(controllerObject[method])) {
+                    const websocketFunction = controllerObject[method] as WebsocketFunction;
+
+                    // Create a new websocket server for this route.
+                    this.server.createWebsocketServer(path.join(routePath, websocketFunction.routeDescriptor?.routePath ?? "/").replace(/\\/g, "/"), websocketFunction);
                 }
             }
         }
