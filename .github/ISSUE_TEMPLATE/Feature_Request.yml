@@ -16,8 +16,8 @@ body:
       label: Is this feature request already in the issue tracker?
       description: Please make sure to check if the feature request is already in the [issue tracker](https://github.com/irisu01/sulfurous/issues).
       options:
-        - label: "I have checked the issue tracker and this feature request is not already in the issue tracker."
-          required: true
+      - label: "I have checked the issue tracker and this feature request is not already in the issue tracker."
+        required: true
 
   - type: textarea
     attributes:
