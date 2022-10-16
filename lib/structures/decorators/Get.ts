@@ -4,7 +4,7 @@ import { RouteMethod } from "../types/RouteMethod";
 import { Route } from "./Route";
 
 export function Get(route?: string) {
-    return function (target: Controller, _: string, descriptor: TypedPropertyDescriptor<RouteFunction>) {
+    return function (target: Controller | typeof Controller, _: string, descriptor: TypedPropertyDescriptor<RouteFunction>) {
         // Run the base route decorator.
         Route([ RouteMethod.Get ], route)(target, _, descriptor);
     }

@@ -3,8 +3,14 @@ import { Request } from "./requests/Request";
 import { Response } from "./requests/Response";
 import { Router } from "./Router";
 import { NextValue } from "./types/NextValue";
+import { RouteMethod } from "./types/RouteMethod";
 
 export class Layer {
+    /**
+     * The route function of this layer.
+     */
+    public routeFunction: RouteFunction;
+    
     /**
      * The path of this layer.
      */
@@ -12,15 +18,13 @@ export class Layer {
 
     public router: Router;
 
-    /**
-     * The route function of this layer.
-     */
-    public routeFunction: RouteFunction;
+    public methods: RouteMethod[];
 
     constructor(router: Router, routeFunction: RouteFunction, path?: string) {
         this.router = router;
         this.path = path;
         this.routeFunction = routeFunction;
+        this.methods = routeFunction.routeDescriptor?.routeMethods || [];
     }
 
     get absolutePath() {
