@@ -23,17 +23,13 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-
-      - run:
-          name: Install TypeScript
-          command: npm install -g typescript
   build:
     docker:
       - image: circleci/node:16
     steps:
       - run:
           name: Build Sulfurous
-          command: tsc 
+          command: npx tsc 
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
