@@ -8,8 +8,8 @@ body:
 
         - that the feature request is not already in the [issue tracker](https://github.com/irisu01/sulfurous/issues)
         - that it isn't just a quick addition or question that can be answered in the [Discord server]()
-
-      ---
+        
+        ---
 
   - type: checkboxes
     attributes:
