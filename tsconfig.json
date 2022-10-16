@@ -10,7 +10,8 @@
         "noImplicitAny": true,
         "noUnusedLocals": false,
         "noFallthroughCasesInSwitch": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
     },
     "include": [
         "lib/**/*.ts",
