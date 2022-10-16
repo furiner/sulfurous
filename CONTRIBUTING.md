@@ -71,3 +71,58 @@ All pull requests must be made against the `master` branch. Pull requests agains
 
 We have our own style guidelines that we follow and are procured by the core team. We use [ESLint](https://eslint.org/) to ensure that all code is properly formatted, and follows the project's style guide. If you are using an IDE, you can use the ESLint extension provided for it to ensure that your code is properly formatted. We will also have a CI system in place to ensure that all code is properly formatted, and follows the project's style guide.
 
+#### Commit Message Guidelines
+
+We haave lenient but active rules surrounding commits, and we expect all commits to follow these guidelines. If you are unable to follow these guidelines, we will ask you to ensure you do in the future. We will also be using commit messages to importantly *generate the change log for Sulfurous*.
+
+##### **Commit Format**
+
+Each commit must consist of a type, a scope and the subejct at hand. The scope is optional, and can be left out if it is not relevant to the commit. The type and subject must be separated by a colon, and the subject must be capitalized.
+
+```
+<type>(<scope>): <subject>
+```
+
+All commits should contain references to a relevant issue, if there is one. This can be done by adding a `#` followed by the issue number at the end of the commit message.
+
+**Examples of good commit messages:**
+
+```
+fix(framework): fix a bug in the framework
+build(npm): update dependencies
+```
+
+###### **Type**
+
+The commit type can be one of the following:
+
+* **build**: Changes that affect how Sulfurous is built, or how it is distributed, or other external dependency changes.
+* **chore**: Changes to general tools or auxiliary tools and libraries such as documentation generation; or the publishing of Sulfurous.
+* **ci**: Changes to the CI configuration files and scripts.
+* **docs**: Changes to the documentation, or other document files.
+* **feat**: A new feature.
+* **fix**: A bug fix.
+* **refactor**: Changes that neither fixes a bug or adds a feature, or other code changes that don't modify the functionality of Sulfurous; such as performance changes.
+* **rev**: Changes that reverts a previous commit.
+* **style**: Changes that do not affect the meaning of the code, such as formatting, whitespace, etc.
+* **test**: Changes to test files such as adding or removing unit tests, or modifying test files.
+
+###### **Scope**
+
+The scope should have the relevant name of the asset being affected, such as:
+
+* **meta**: The documents related to the project, such as the README, the LICENSE, etc.
+* **framework**: The Sulfurous framework.
+* **npm**: The npm package.
+* **docs**: The documentation.
+* **tests**: The test files.
+* **circleci**: The CircleCI configuration files and scripts.
+* **github**: The GitHub configuration files and scripts.
+
+If more than one thing is changed, then seperate it with a comma. (e.g. `docs, tests`)
+
+If the scope is not relevant to the commit, then it can be left out.
+
+###### **Subject**
+
+The subject should be a short description of the change, and should be capitalized. It should not contain a period at the end. It should have no more than 50 characters, and not be capitalized.
