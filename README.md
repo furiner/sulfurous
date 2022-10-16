@@ -1,13 +1,14 @@
 <div align="center">
     <img src="https://github.com/irisu01/sulfurous/blob/master/assets/darklogo.png?raw=true#gh-dark-mode-only" />
     <img src="https://github.com/irisu01/sulfurous/blob/master/assets/lightlogo.png?raw=true#gh-light-mode-only" />
-
+    <hr />
     <p>A comprehensive and speedy framework for <a href="https://nodejs.org" target="_blank">Node.js</a> to support the many goals and needs of building modern and scalable web applications for the modern web.</p>
 
     <!-- Icons -->
     <p>
 
     </p>
+    <hr />
 </div>
 
 ## What is this?
