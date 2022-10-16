@@ -23,6 +23,10 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+      
+      - run:
+          name: Install TypeScript
+          command: npm install typescript
   build:
     docker:
       - image: circleci/node:16
