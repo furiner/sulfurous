@@ -43,5 +43,7 @@ workflows:
   build:
     jobs:
       - setup
-      - build
+      - build:
+          requires:
+            - setup
     
