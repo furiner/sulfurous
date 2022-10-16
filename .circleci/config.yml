@@ -27,7 +27,7 @@ jobs:
       
       - run:
           name: Install TypeScript
-          command: sudo npm install -g typescript
+          command: npm install typescript
   build:
     working_directory: ~/sulfurous
     docker:
@@ -35,7 +35,7 @@ jobs:
     steps:
       - run:
           name: Build Sulfurous
-          command: tsc
+          command: npx tsc
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
