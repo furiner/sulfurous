@@ -7,6 +7,7 @@ orbs:
 
 jobs:
   setup:
+    working_directory: ~/sulfurous
     docker:
       - image: circleci/node:16
     steps:
@@ -28,6 +29,7 @@ jobs:
           name: Install TypeScript
           command: npm install typescript
   build:
+    working_directory: ~/sulfurous
     docker:
       - image: circleci/node:16
     steps:
