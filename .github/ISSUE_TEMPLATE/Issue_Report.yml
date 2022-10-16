@@ -1,5 +1,6 @@
 name: "Issue Report"
 description: "Yikes, have a genuine problem? Use this template to report it!"
+labels: ["bug"]
 body:
   - type: markdown
     attributes:

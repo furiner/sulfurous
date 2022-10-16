@@ -1,5 +1,6 @@
 name: "Feature Request"
 description: "Suggest an idea for this project using this fun template!"
+labels: ["feature request", "flag: needs core member"]
 body:
   - type: markdown
     attributes:
