@@ -115,9 +115,10 @@ The scope should have the relevant name of the asset being affected, such as:
 * **framework**: The Sulfurous framework.
 * **npm**: The npm package.
 * **docs**: The documentation.
-* **tests**: The test files.
+* **config**: Any relevant configuration file to that specific type.
 * **circleci**: The CircleCI configuration files and scripts.
 * **github**: The GitHub configuration files and scripts.
+* Any file is a valid scope, excluding its extension. Primarily, this should be used when editing framework classes.
 
 If more than one thing is changed, then seperate it with a comma. (e.g. `docs, tests`)
 
