@@ -22,7 +22,7 @@ orbs:
   node: circleci/node@2
 
 build-template: &build-template
-  working_director: ~/sulfurous
+  working_directory: ~/sulfurous
   steps:
     - checkout
     - *restore-dependencies
