@@ -4,8 +4,10 @@
     <p>A comprehensive and speedy framework for <a href="https://nodejs.org" target="_blank">Node.js</a> to support the many goals and needs of building modern and scalable web applications for the modern web.</p>
     <!-- Icons -->
     <p>
-    <a href="https://circleci.com/gh/irisu01/sulfurous/"><img src="https://img.shields.io/circleci/build/github/irisu01/sulfurous/master" /></a>
-    <a href='https://coveralls.io/github/irisu01/sulfurous?branch=master'><img src='https://coveralls.io/repos/github/irisu01/sulfurous/badge.svg?branch=master' alt='Coverage Status' /></a>
+    <a href="https:/github.com/irisu01/sulfurous/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/irisu01/sulfurous?style=flat-square" /></a>
+    <a href="https://circleci.com/gh/irisu01/sulfurous/"><img src="https://img.shields.io/circleci/build/github/irisu01/sulfurous/master?style=flat-square" /></a>
+    <a href="https://coveralls.io/github/irisu01/sulfurous?branch=master"><img src='https://img.shields.io/coveralls/github/irisu01/sulfurous?style=flat-square' alt='Coverage Status' /></a>
+    <a href="https://github.com/irisu01/sulfurous/issues"><img src="https://img.shields.io/github/issues/irisu01/sulfurous?style=flat-square" /></a>
     </p>
     <hr />
 </div>
