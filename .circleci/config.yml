@@ -21,7 +21,7 @@ defaults:
 orbs:
   node: circleci/node@2
 
-test-cov-template: &test-template
+test-cov-template: &test-cov-template
   working_directory: ~/sulfurous
   steps:
     - checkout
