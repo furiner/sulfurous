@@ -6,7 +6,7 @@ export interface ApplicationOptions {
     /* WEBSOCKET OPTIONS */ 
     /**
      * Whether or not to enable the web application to use websockets.
-     * @default false
+     * @default true
      */
     websocketEnabled?: boolean;
 
@@ -15,7 +15,7 @@ export interface ApplicationOptions {
     /**
      * Tells clients to use HTTP/2.
      * If this is false, the server will only support HTTP/1.1 connections.
-     * @defaultValue `true`
+     * @defaultValue `false`
      */
     useHttp2?: boolean
 
@@ -42,4 +42,12 @@ export interface ApplicationOptions {
      * The path to the certificate file to use for the HTTP/2 server.
      */
     cert?: string
+}
+
+export const DefaultApplicationOptions: ApplicationOptions = {
+    websocketEnabled: true,
+    useHttp2: false,
+    insecureHttp2: false,
+    key: undefined,
+    cert: undefined
 }

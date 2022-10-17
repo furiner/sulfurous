@@ -2,7 +2,7 @@ import path from "path";
 
 import { DefaultController } from "../controllers/DefaultController";
 import { RouteHandler } from "../handlers/RouteHandler";
-import { ApplicationOptions } from "../interfaces/ApplicationOptions";
+import { ApplicationOptions, DefaultApplicationOptions } from "../interfaces/ApplicationOptions";
 import { Controller } from "../structures/Controller";
 import { Router } from "../structures/Router";
 import { RouteFunction } from "../structures/types/RouteFunction";
@@ -20,10 +20,7 @@ export class Application {
         this.server = new Server(this);
 
         // Merge options with the default options.
-        this.options = Object.assign<ApplicationOptions, ApplicationOptions>({
-            websocketEnabled: false,
-            useHttp2: true,
-        }, options ?? {});
+        this.options = Object.assign<ApplicationOptions, ApplicationOptions>(DefaultApplicationOptions, options ?? {});
 
     }
 
