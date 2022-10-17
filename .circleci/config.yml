@@ -44,7 +44,7 @@ test-cov-template: &test-cov-template
     - store_artifacts:
         path: coverage
         
-  test-nocov-template: &test-nocov-template
+test-nocov-template: &test-nocov-template
   working_directory: ~/sulfurous
   steps:
     - checkout
