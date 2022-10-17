@@ -115,7 +115,7 @@ The scope should have the relevant name of the asset being affected, such as:
 * **framework**: The Sulfurous framework.
 * **npm**: The npm package.
 * **docs**: The documentation.
-* **tests**: The test files.
+* **config**: Any relevant configuration file to that specific type.
 * **circleci**: The CircleCI configuration files and scripts.
 * **github**: The GitHub configuration files and scripts.
 
