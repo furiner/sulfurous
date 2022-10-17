@@ -1,9 +1,40 @@
 version: 2.1
 
+defaults:
+  - &restore-dependencies
+    restore_cache:
+      key: dependencies-{{ checksum "package.json" }}
+  
+  - &install-dependencies
+    run:
+      name: Install dependencies
+      command: npm ci
+
+  - &save-dependencies
+    save_cache:
+      key: dependencies-{{ checksum "package.json" }}
+      paths:
+        - node_modules
+
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 # See: https://circleci.com/docs/2.0/orb-intro/
 orbs:
   node: circleci/node@2
+
+build-template: &build-template
+  working_director: ~/sulfurous
+  steps:
+    - checkout
+    - *restore-dependencies
+    - *install-dependencies
+    - *save-dependencies
+    - run:
+        name: Build
+        command: npm run build
+    
+    - run:
+        name: Run Test Cases
+        command: npm run test
 
 jobs:
   build:
@@ -29,10 +60,24 @@ jobs:
           name: Build Sulfurous
           command: npm run build
 
+  # Test cases on Supported Versions
+  test-and-report-node-16: # Main version supported
+    <<: *build-template
+    docker:
+      - image: circleci/node:16
+    steps:
+      - run:
+          name: Send and collect test coverage
+          command: npm run test:coverage
+      - store_artifacts:
+          path: coverage
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   build:
     jobs:
       - build
-    
+      - test-and-report-node-16:
+          requires:
+            - build
