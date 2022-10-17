@@ -21,13 +21,37 @@ defaults:
 orbs:
   node: circleci/node@2
 
-build-template: &build-template
+test-cov-template: &test-template
   working_directory: ~/sulfurous
   steps:
     - checkout
     - *restore-dependencies
     - *install-dependencies
     - *save-dependencies
+
+    - run:
+        name: Build
+        command: npm run build
+    
+    - run:
+        name: Run Test Cases
+        command: npm run test
+
+    - run:
+        name: Send and collect test coverage
+        command: npm run test:coverage
+
+    - store_artifacts:
+        path: coverage
+        
+  test-nocov-template: &test-nocov-template
+  working_directory: ~/sulfurous
+  steps:
+    - checkout
+    - *restore-dependencies
+    - *install-dependencies
+    - *save-dependencies
+
     - run:
         name: Build
         command: npm run build
@@ -62,15 +86,9 @@ jobs:
 
   # Test cases on Supported Versions
   test-and-report-node-16: # Main version supported
-    <<: *build-template
+    <<: *test-cov-template
     docker:
       - image: circleci/node:16
-    steps:
-      - run:
-          name: Send and collect test coverage
-          command: npm run test:coverage
-      - store_artifacts:
-          path: coverage
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
