@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "@types/chai": "^4.3.3",
+    "@types/mocha": "^10.0.0",
     "@types/node": "^18.11.0",
     "@types/ws": "^8.5.3",
     "chai": "^4.3.6",
@@ -19,7 +21,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "nyc mocha tests/**/*.spec.ts --reporter spec",
+    "test": "nyc mocha tests/**/*.spec.ts --require ts-node/register --reporter spec",
     "test:coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
