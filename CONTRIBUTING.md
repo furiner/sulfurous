@@ -112,13 +112,17 @@ The commit type can be one of the following:
 The scope should have the relevant name of the asset being affected, such as:
 
 * **meta**: The documents related to the project, such as the README, the LICENSE, etc.
-* **framework**: The Sulfurous framework.
+* **common**: The common Sulfurous files, such as decorators, structures, interfaces, etc.
+* **core**: The core Sulfurous files, such as the core framework, the core server, etc.
+* **types**: The Sulfurous types folder, which contains individual types that are't explicitly objects (interfaces) or anything else.
+* **sulfurous**: The main Sulfurous index files, such as index.ts.
 * **npm**: The npm package.
 * **docs**: The documentation.
 * **config**: Any relevant configuration file to that specific type.
 * **circleci**: The CircleCI configuration files and scripts.
 * **github**: The GitHub configuration files and scripts.
 * Any file is a valid scope, excluding its extension. Primarily, this should be used when editing framework classes.
+* Additionally, you can create a new scope if it is not listed above; or utilize one based off the project structure.
 
 If more than one thing is changed, then seperate it with a comma. (e.g. `docs, tests`)
 
