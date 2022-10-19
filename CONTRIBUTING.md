@@ -77,10 +77,10 @@ We haave lenient but active rules surrounding commits, and we expect all commits
 
 ##### **Commit Format**
 
-Each commit must consist of a type, a scope and the subejct at hand. The scope is optional, and can be left out if it is not relevant to the commit. The type and subject must be separated by a colon, and the subject must be capitalized.
+Each commit must consist of a type, a scope and the subejct at hand. The scope is optional, and can be left out if it is not relevant to the commit. The type and subject must be separated by a colon, and the subject must be capitalized. Additionally, the `[skip ci]` tag can be added to the end of the commit message to skip the CI systems put in place. This is primarily for documentation changes, and should be used sparingly.
 
 ```
-<type>(<scope>): <subject>
+<type>(<scope>): <subject> ([skip ci])
 ```
 
 All commits should contain references to a relevant issue, if there is one. This can be done by adding a `#` followed by the issue number at the end of the commit message.
@@ -90,6 +90,7 @@ All commits should contain references to a relevant issue, if there is one. This
 ```
 fix(framework): fix a bug in the framework
 build(npm): update dependencies
+docs(meta): clarified on the commit message guidelines [skip ci]
 ```
 
 ###### **Type**
