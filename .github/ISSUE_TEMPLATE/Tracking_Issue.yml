@@ -1,0 +1,26 @@
+name: "Feature Tracking Issue"
+description: "Need to track a feature requst, or progress on a potential problem?? Use this template to track it!"
+labels: ["tracking issue"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Is this report already in the issue tracker?
+      description: Please make sure to check if the issue report is already in the [issue tracker](https://github.com/irisu01/sulfurous/issues).
+      options:
+      - label: "I have checked the issue tracker and this report is not already in the issue tracker."
+        required: true
+
+  - type: textarea
+    attributes:
+      label: Describe the issue in question
+      description: Please describe what this is tracking in as much detail as possible.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Outline all the steps to complete this issue
+      description: Please describe the steps to complete this issue in as much detail as possible.
+    validations:
+      required: true
+

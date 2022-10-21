@@ -17,7 +17,7 @@ body:
       label: Is this report already in the issue tracker?
       description: Please make sure to check if the issue report is already in the [issue tracker](https://github.com/irisu01/sulfurous/issues).
       options:
-      - label: "I have checked the issue tracker and this reportis not already in the issue tracker."
+      - label: "I have checked the issue tracker and this report is not already in the issue tracker."
         required: true
 
   - type: textarea
