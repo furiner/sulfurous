@@ -21,12 +21,14 @@ To reach this goal, all of the performance optimizations are made at a web serve
 <img align="right" src="" height="150px" />
 
 **Primarily**, the end goals and features of this framework are:
-* A clean and easy to use architecture, as well as a modular routing system;
-* A fast and immense focus on performance and scalability, with possible statistics and stress testing against other frameworks;
+* a clean and easy to use architecture, as well as a modular routing system;
+* a fast and immense focus on performance and scalability, with possible statistics and stress testing against other frameworks;
 * The addition of important helpers and integrations for common tasks and needs;
-* A high quality and well-documented codebase;
+* a high quality and well-documented codebase;
 * Great coverage on all of the features through solid unit testing;
-* A complete myriad of third-party support for plugins that are available.
+* a vast support for plugins and integrations with other frameworks and libraries;
+* and A complete myriad of third-party support for plugins that are available.
+
 
 ### Philosophy
 
