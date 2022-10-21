@@ -1,3 +1,4 @@
+import { Integration } from "../structures/Integration";
 
 /**
  * The server options that can be provided to the web application instance.
@@ -41,7 +42,12 @@ export interface ApplicationOptions {
     /**
      * The path to the certificate file to use for the HTTP/2 server.
      */
-    cert?: string
+    cert?: string,
+
+    /**
+     * The integrations to use for the web application.
+     */
+    integrations?: Integration[]
 }
 
 export const DefaultApplicationOptions: ApplicationOptions = {
@@ -49,5 +55,6 @@ export const DefaultApplicationOptions: ApplicationOptions = {
     useHttp2: false,
     insecureHttp2: false,
     key: undefined,
-    cert: undefined
+    cert: undefined,
+    integrations: []
 }
