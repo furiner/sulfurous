@@ -1,4 +1,5 @@
 import path from "path";
+import { EventEmitter } from "events";
 
 import { DefaultController } from "../controllers/DefaultController";
 import { RouteHandler } from "../handlers/RouteHandler";
@@ -9,19 +10,29 @@ import { RouteFunction } from "../structures/types/RouteFunction";
 import { WebsocketFunction } from "../structures/types/WebsocketFunction";
 import { Util } from "../util/Util";
 import { Server } from "./Server";
+import { ApplicationEvent } from "../structures/types/ApplicationEvent";
 
-export class Application {
+export class Application extends EventEmitter {
     public options: ApplicationOptions;
     public routes: RouteHandler;
     public server: Server;
 
     constructor(options?: ApplicationOptions) {
+        super();
+
         this.routes = new RouteHandler(this);
         this.server = new Server(this);
 
         // Merge options with the default options.
         this.options = Object.assign<ApplicationOptions, ApplicationOptions>(DefaultApplicationOptions, options ?? {});
+    }
 
+    on(eventName: ApplicationEvent, listener: (...args: any[]) => void): this {
+        return super.on(eventName, listener);
+    }
+
+    once(eventName: ApplicationEvent, listener: (...args: any[]) => void): this {
+        return super.once(eventName, listener);
     }
 
     register(routePath: string, route: Controller | RouteFunction | WebsocketFunction) {
