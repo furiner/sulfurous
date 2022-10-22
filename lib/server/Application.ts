@@ -11,29 +11,51 @@ import { WebsocketFunction } from "../structures/types/WebsocketFunction";
 import { Util } from "../util/Util";
 import { Server } from "./Server";
 import { ApplicationEvent } from "../structures/types/ApplicationEvent";
+import { Integration } from "../structures/Integration";
+import { IntegrationEventFunction } from "../structures/types/IntegrationEvent";
+import { IntegrationManager } from "../structures/managers/IntegrationManager";
 
+/**
+ * A web application, the central focus and forefront of the Sulfurous web framework.
+ */
 export class Application extends EventEmitter {
+    /**
+     * The options for this application.
+     */
     public options: ApplicationOptions;
+
+    /**
+     * The route handler for this application.
+     */
     public routes: RouteHandler;
+
+    /**
+     * The main server for this application.
+     */
     public server: Server;
+
+    /**
+     * The integrations registered to this application.
+     */
+    public integrations: IntegrationManager;
 
     constructor(options?: ApplicationOptions) {
         super();
 
         this.routes = new RouteHandler(this);
         this.server = new Server(this);
+        this.integrations = new IntegrationManager(this);
 
         // Merge options with the default options.
         this.options = Object.assign<ApplicationOptions, ApplicationOptions>(DefaultApplicationOptions, options ?? {});
+
+        // Handle integrations.
+        for (let integration of this.options.integrations ?? []) {
+            // Register the integration.
+            this._handleIntegration(integration);
+        }
     }
 
-    on(eventName: ApplicationEvent, listener: (...args: any[]) => void): this {
-        return super.on(eventName, listener);
-    }
-
-    once(eventName: ApplicationEvent, listener: (...args: any[]) => void): this {
-        return super.once(eventName, listener);
-    }
 
     register(routePath: string, route: Controller | RouteFunction | WebsocketFunction) {
         // Validate the type of the route provided.
@@ -98,8 +120,39 @@ export class Application extends EventEmitter {
     listen(port: number) {
         // Register default middlewares.
         this.register("/", new DefaultController());
-        
+
         // Start the web server.
         this.server.start(port);
+    }
+
+    /**
+     * Handles an integration.
+     * @param integration The integration to register.
+     * @private
+     */
+    _handleIntegration(integration: Integration) {
+        // Register all the events for the integration.
+        const methods = Object.getOwnPropertyNames(Object.getPrototypeOf(integration));
+        const integrationObject: Record<string, any> = integration;
+
+        for (let method of methods) {
+            if (method == "constructor") {
+                // Ignore the constructor of the integration.
+                continue;
+            }
+
+            // Register the event to the integration.
+            const eventFunction = integrationObject[method] as IntegrationEventFunction;
+            if (eventFunction.eventName !== undefined) {
+                integration.on(eventFunction.eventName, eventFunction);
+            }
+        }
+
+        // Register the integration.
+        this.integrations.register(integration);
+
+        // Emit the integration enabled event.
+        this.emit("integrationEnable", integration);
+        integration.emit("enable", this);
     }
 }

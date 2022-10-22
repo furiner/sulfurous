@@ -97,6 +97,9 @@ export class Server {
         const request = new Request(req, data);
         const response = new Response(res);
 
+        // Emit the request event to all of the integrations.
+        this.application.integrations.emit("request", request);
+
         let routerIndex = 0;
         const next = (value?: NextValue) => {
             if (routerIndex >= this.application.routes.routers.length) {

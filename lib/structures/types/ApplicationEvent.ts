@@ -1,1 +1,1 @@
-export type ApplicationEvent = "request" | "integrationEnabled";
+export type ApplicationEvent = "request" | "integrationEnable";
