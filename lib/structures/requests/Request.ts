@@ -143,7 +143,5 @@ export class Request {
             const query = new URLSearchParams(this.message.url.split("?")[1]);
             this.query = new Map(query.entries());
         }
-
-        console.log(this)
     }
 }
