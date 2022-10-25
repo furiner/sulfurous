@@ -26,7 +26,15 @@ export class Cookie {
     /**
      * Converts this cookie to a string.
      */
-    toString() {
-        return `${this.name}=${this.content};`;
+    public toString(): string {
+        return `${this.name}=${this.content}; ${this._dataToString()}`;
+    }
+
+    /**
+     * Converts the data of this cookie to a string.
+     * @private
+     */
+    private _dataToString(): string {
+        return `${this.data.secure ? `Secure;` : "" } ${this.data.httpOnly ? "HttpOnly;" : ""} ${this.data.domain ? `Domain=${this.data.domain};` : ""} ${this.data.path ? `Path=${this.data.path};` : ""} ${this.data.expires ? `Expires=${this.data.expires.toUTCString()};` : ""} ${this.data.sameSite ? `SameSite=${this.data.sameSite};` : ""} `;
     }
 }
