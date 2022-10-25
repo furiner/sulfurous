@@ -1,5 +1,5 @@
 import http from "http";
-import { Transform } from "stream";
+import { CookieData } from "../../interfaces/CookieData";
 import { Cookie } from "../data/Cookie";
 import { DataStream } from "../data/DataStream";
 
@@ -22,7 +22,7 @@ export class Response {
     /**
      * The cookies to send alongside this response.
      */
-    public cookies: Map<string, Cookie>;
+    public cookies: Cookie[];
 
     /**
      * A writable stream of data to send to the client.
@@ -33,7 +33,7 @@ export class Response {
     constructor(message: http.ServerResponse) {
         this.message = message;
         this.headers = new Map();
-        this.cookies = new Map();
+        this.cookies = [];
         this.stream = new DataStream();
     }
 
@@ -89,20 +89,20 @@ export class Response {
     end() {
         // Set certain default headers if they haven't been set already
         if (!this.headers.has("x-powered-by")) {
-            this.header("x-powered-by", "Sulfurous");
+            this.header("X-Powered-By", "Sulfurous");
         }
 
         if (!this.headers.has("content-type")) {
-            this.header("content-type", "text/plain");
+            this.header("Content-Type", "text/plain");
+        }
+
+        // Set the cookies if any.
+        if (this.cookies.length > 0) {
+            this.header("Set-Cookie", this.cookies.map(cookie => cookie.toString().split(/(?:\s{1,}?);/g)[0].slice(0, -1)));
         }
 
         // Set the headers.
         this.message.writeHead(this.statusCode ?? 200, Object.fromEntries(this.headers));
-
-        // Set the cookies if any.
-        if (this.cookies.size > 0) {
-            this.header("set-cookie", Array.from(this.cookies.values()).map(cookie => cookie.toString()));
-        }
 
         // Write the content body.
         this.message.write(this.stream.finish());
