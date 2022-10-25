@@ -1,8 +1,6 @@
 import { Router } from "./Router";
 
-
-
-export class Controller {
+export abstract class Controller {
     public routes: Router[];
 
     constructor() {
