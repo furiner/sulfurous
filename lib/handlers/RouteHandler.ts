@@ -6,6 +6,10 @@ export class RouteHandler {
      * The application that instantiated this handler.
      */
     public application: Application;
+
+    /**
+     * The routers that this handler is handling.
+     */
     public routers: Router[];
     
 
@@ -16,34 +20,20 @@ export class RouteHandler {
 
     /**
      * Adds a router to this handler.
-     * @param route The route path to handle.
+     * @param routePath The route path to handle.
+     * @param router The router to handle the route.
      */
-    add(routePath: string, router: Router) {
+    public add(routePath: string, router: Router) {
+        router.path = routePath;
+
         this.routers.push(router);
     }
 
     /**
      * Finds a router relevant to this route path.
-     * @param routePath 
+     * @param routePath The route path to handle.
      */
-    find(routePath: string) {
-        let router: Router | null = null;
-
-        for (let route of this.routers) {
-            if (route.path === routePath) {
-                router = route;
-                break;
-            }
-        }
-
-        return router;
+    public find(routePath: string) {
+        return this.routers.find((router) => router.path == routePath) ?? null;
     }
-
-    /**
-     * Handles a request to a route.
-     */
-    handle(req: Request) {
-        
-    }
-
 }
