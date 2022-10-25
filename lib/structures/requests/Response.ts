@@ -88,11 +88,11 @@ export class Response {
      */
     end() {
         // Set certain default headers if they haven't been set already
-        if (!this.headers.has("x-powered-by")) {
+        if (!this.headers.has("X-Powered-By")) {
             this.header("X-Powered-By", "Sulfurous");
         }
 
-        if (!this.headers.has("content-type")) {
+        if (!this.headers.has("Content-Type")) {
             this.header("Content-Type", "text/plain");
         }
 
