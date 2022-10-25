@@ -113,10 +113,7 @@ The commit type can be one of the following:
 The scope should have the relevant name of the asset being affected, such as:
 
 * **meta**: The documents related to the project, such as the README, the LICENSE, etc.
-* **common**: The common Sulfurous files, such as decorators, structures, interfaces, etc.
-* **core**: The core Sulfurous files, such as the core framework, the core server, etc.
-* **types**: The Sulfurous types folder, which contains individual types that are't explicitly objects (interfaces) or anything else.
-* **sulfurous**: The main Sulfurous index files, such as index.ts.
+* **core**: The entire Sulfurous framework, as well as it's core components.
 * **npm**: The npm package.
 * **docs**: The documentation.
 * **config**: Any relevant configuration file to that specific type.
